@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,12 +28,21 @@ namespace ConsAppMongoDBCRUD
                 Console.WriteLine("\n\n");
 
                 //Get Database and Collection  
-                IMongoDatabase db = dbClient.GetDatabase("MyWorkMongoDB");
+                IMongoDatabase db = dbClient.GetDatabase("test");
                 var collList = db.ListCollections().ToList();
                 Console.WriteLine("The list of collections are :");
                 foreach (var item in collList)
                 {
                     Console.WriteLine(item);
+                }
+
+                //READ EXAMPLE
+                var exampleColl = db.GetCollection<BsonDocument>("example");
+
+                var resultDocuments = exampleColl.Find(new BsonDocument()).ToList();
+                foreach (var item in resultDocuments)
+                {
+                    Console.WriteLine(item.ToString());
                 }
 
                 var personColl = db.GetCollection<BsonDocument>("PersonsCollection");
